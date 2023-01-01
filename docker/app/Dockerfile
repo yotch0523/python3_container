@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:latest
 
 RUN apt-get update && apt-get install -y --no-install-recommends wget build-essential libreadline-dev \ 
 libncursesw5-dev libssl-dev libsqlite3-dev libgdbm-dev libbz2-dev liblzma-dev zlib1g-dev uuid-dev libffi-dev libdb-dev
@@ -13,7 +13,7 @@ RUN wget --no-check-certificate https://www.python.org/ftp/python/3.11.1/Python-
 RUN apt-get autoremove -y
 
 WORKDIR /app
-COPY ./requirements.txt .
+COPY ./docker/app/requirements.txt .
 
 #必要なpythonパッケージをpipでインストール
 RUN pip3 install --no-cache-dir --upgrade -r requirements.txt

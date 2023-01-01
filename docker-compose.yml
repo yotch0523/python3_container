@@ -9,14 +9,11 @@ services:
             - TZ=Asia/Tokyo
         volumes:
             - ./server:/usr/local/src
-        privileged: true
         ports:
             - 8080:8080
-        security_opt:
-            apparmor:unconfined
-        cap_add:
-            SYS_PTRACE
         tty: true
+        networks:
+            - python3_network
     db:
         image: mysql:latest
         container_name: db-for-python3
@@ -35,5 +32,13 @@ services:
         restart: always
         env_file:
             - ./.env
-volumes:
-    ./docker/db/data
+        networks:
+            - python3_network
+networks:
+    python3_network:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+            - subnet: "192.168.2.0/24"
+              gateway: "192.168.2.1"
