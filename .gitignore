@@ -1,4 +1,5 @@
 .env
+.vscode
 server/*
-docker/db/data/*
-docker/db/sql/*
+docker/db/*
+!docker/db/Dockerfile
