@@ -5,6 +5,12 @@ services:
         build:
             context: .
             dockerfile: ./docker/app/Dockerfile
+            args:
+                - USER_NAME=${USER_NAME}
+                - GROUP_NAME=${GROUP_NAME}
+                - UID=${UID}
+                - GID=${GID}
+                - USER_PASSWORD=${USER_PASSWORD}
         environment:
             - TZ=Asia/Tokyo
         volumes:
@@ -12,6 +18,8 @@ services:
         ports:
             - 8080:8080
         tty: true
+        env_file:
+            - ./.env
         networks:
             - python3_network
     db:
