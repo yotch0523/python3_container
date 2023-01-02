@@ -15,18 +15,17 @@ services:
         networks:
             - python3_network
     db:
-        image: mysql:latest
         container_name: db-for-python3
-        environment:
-            - MYSQL_ROOT_PASSWORD=$DB_ROOT_PASSWORD
-            - MYSQL_DATABASE=dev
-            - MYSQL_USER=$DB_ADMIN_USERNAME
-            - MYSQL_PASSWORD=$DB_ADMIN_PASSWORD
-            - TZ=Asia/Tokyo
+        build:
+            context: .
+            dockerfile: ./docker/db/Dockerfile
+            args:
+                - DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+                - DB_ADMIN_USERNAME=${DB_ADMIN_USERNAME}
+                - DB_ADMIN_PASSWORD=${DB_ADMIN_PASSWORD}
         volumes:
-            - ./docker/db/data:/var/lib/mysql
-            - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
-            - ./docker/db/sql:/docker-entrypoint-initdb.d
+            - db-store:/var/lib/mysql
+            - ./docker/db/conf/my.cnf:/etc/mysql/conf.d/my.cnf
         ports:
             - "33306:3306"
         restart: always
@@ -42,3 +41,6 @@ networks:
             config:
             - subnet: "192.168.2.0/24"
               gateway: "192.168.2.1"
+
+volumes:
+    db-store:
