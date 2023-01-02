@@ -15,6 +15,9 @@ RUN apt-get autoremove -y
 WORKDIR /app
 COPY ./docker/app/requirements.txt .
 
+COPY ./docker/app/config/vim/.vimrc /root/.vimrc
+COPY ./docker/app/config/vim/.vim /root/.vim
+
 #必要なpythonパッケージをpipでインストール
 RUN pip3 install --no-cache-dir --upgrade -r requirements.txt
 
