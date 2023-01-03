@@ -3,3 +3,4 @@
 server/*
 docker/db/*
 !docker/db/Dockerfile
+docker/app/scripts/*
